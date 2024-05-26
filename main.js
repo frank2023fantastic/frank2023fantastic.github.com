@@ -29,6 +29,15 @@ fetch('data.json')
       .attr('y', d => y(d.sales))
       .attr('height', d => 400 - y(d.sales));
 
+    // Add labels to bars
+    svg.selectAll('.label')
+      .data(data)
+      .enter().append('text')
+      .attr('class', 'label')
+      .attr('x', d => x(d.product) + x.bandwidth() / 2)
+      .attr('y', d => y(d.sales) - 5)
+      .text(d => d.sales);
+
     // Create x-axis
     svg.append('g')
       .attr('transform', 'translate(0, 400)')
