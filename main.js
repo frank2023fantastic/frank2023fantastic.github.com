@@ -5,18 +5,22 @@ function updateVisualization() {
   // Remove the previous SVG element, if it exists
   d3.select('#chart svg').remove();
 
+  // Get the window dimensions
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
   // Create SVG container
   const svg = d3.select('#chart')
     .append('svg')
-    .attr('width', 1200)
-    .attr('height', 600);
+    .attr('width', windowWidth)
+    .attr('height', windowHeight);
 
   // Create scales
   const x = d3.scaleBand()
-    .range([0, 1200])
+    .range([0, windowWidth])
     .padding(0.1);
   const y = d3.scaleLinear()
-    .range([500, 0]);
+    .range([windowHeight - 100, 0]); // Adjust the range to leave space for labels
 
   // Set domains for scales
   x.domain(data.map(d => d.product));
@@ -30,7 +34,7 @@ function updateVisualization() {
     .attr('x', d => x(d.product))
     .attr('width', x.bandwidth())
     .attr('y', d => y(d.sales))
-    .attr('height', d => 500 - y(d.sales));
+    .attr('height', d => windowHeight - y(d.sales) - 100); // Adjust the height to leave space for labels
 
   // Add labels inside bars
   svg.selectAll('.label')
@@ -47,12 +51,12 @@ function updateVisualization() {
     .enter().append('text')
     .attr('class', 'product-name')
     .attr('x', d => x(d.product) + x.bandwidth() / 2)
-    .attr('y', 525)
+    .attr('y', windowHeight - 50) // Position the labels 50 pixels from the bottom
     .text(d => d.product);
 
   // Create x-axis
   svg.append('g')
-    .attr('transform', 'translate(0, 500)')
+    .attr('transform', `translate(0, ${windowHeight - 100})`) // Position the x-axis 100 pixels from the bottom
     .call(d3.axisBottom(x));
 
   // Create y-axis
