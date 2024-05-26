@@ -8,15 +8,15 @@ function updateVisualization() {
   // Create SVG container
   const svg = d3.select('#chart')
     .append('svg')
-    .attr('width', 800)
-    .attr('height', 400);
+    .attr('width', 1600)
+    .attr('height', 800);
 
   // Create scales
   const x = d3.scaleBand()
-    .range([0, 800])
+    .range([0, 1200])
     .padding(0.1);
   const y = d3.scaleLinear()
-    .range([400, 0]);
+    .range([500, 0]);
 
   // Set domains for scales
   x.domain(data.map(d => d.product));
@@ -30,7 +30,7 @@ function updateVisualization() {
     .attr('x', d => x(d.product))
     .attr('width', x.bandwidth())
     .attr('y', d => y(d.sales))
-    .attr('height', d => 400 - y(d.sales));
+    .attr('height', d => 500 - y(d.sales));
 
   // Add labels to bars
   svg.selectAll('.label')
@@ -38,12 +38,21 @@ function updateVisualization() {
     .enter().append('text')
     .attr('class', 'label')
     .attr('x', d => x(d.product) + x.bandwidth() / 2)
-    .attr('y', d => y(d.sales) - 5)
+    .attr('y', d => y(d.sales) - 10)
     .text(d => d.sales);
+
+  // Add product names under bars
+  svg.selectAll('.product-name')
+    .data(data)
+    .enter().append('text')
+    .attr('class', 'product-name')
+    .attr('x', d => x(d.product) + x.bandwidth() / 2)
+    .attr('y', 525)
+    .text(d => d.product);
 
   // Create x-axis
   svg.append('g')
-    .attr('transform', 'translate(0, 400)')
+    .attr('transform', 'translate(0, 500)')
     .call(d3.axisBottom(x));
 
   // Create y-axis
