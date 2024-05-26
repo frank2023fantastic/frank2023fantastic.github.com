@@ -8,8 +8,8 @@ function updateVisualization() {
   // Create SVG container
   const svg = d3.select('#chart')
     .append('svg')
-    .attr('width', 1600)
-    .attr('height', 800);
+    .attr('width', 1200)
+    .attr('height', 600);
 
   // Create scales
   const x = d3.scaleBand()
@@ -32,13 +32,13 @@ function updateVisualization() {
     .attr('y', d => y(d.sales))
     .attr('height', d => 500 - y(d.sales));
 
-  // Add labels to bars
+  // Add labels inside bars
   svg.selectAll('.label')
     .data(data)
     .enter().append('text')
     .attr('class', 'label')
     .attr('x', d => x(d.product) + x.bandwidth() / 2)
-    .attr('y', d => y(d.sales) - 10)
+    .attr('y', d => y(d.sales) + 20)
     .text(d => d.sales);
 
   // Add product names under bars
