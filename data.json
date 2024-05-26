@@ -1,0 +1,7 @@
+[
+    { "product": "Product A", "sales": 250 },
+    { "product": "Product B", "sales": 175 },
+    { "product": "Product C", "sales": 320 },
+    { "product": "Product D", "sales": 90 },
+    { "product": "Product E", "sales": 210 }
+]
